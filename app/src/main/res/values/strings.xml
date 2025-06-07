@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RateMyProf</string>
+    <string name="title_activity_admin_login">AdminLogin</string>
+    <string name="title_activity_new_college_form">NewCollegeForm</string>
+    <string name="title_activity_form_submitted">FormSubmitted</string>
+    <string name="title_activity_student_home_page">StudentHomePage</string>
+</resources>
