@@ -9,20 +9,21 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material. icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
-import com.saveetha.ratemyprof.ui.theme.RedRoseFamily
+// import com.saveetha.ratemyprof.ui.theme.RedRoseFamily // Uncomment only if you have defined this
 
 class StudentHomePage : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,104 +52,101 @@ fun StudentDashboardScreen(
 ) {
     val scrollState = rememberScrollState()
 
-    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-        val screenHeight = this.maxHeight
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+            .padding(top = 30.dp),
+        verticalArrangement = Arrangement.Top
+    ) {
+        // Top Bar
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 25.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(Icons.Default.Menu, contentDescription = "Menu", tint = Color.Black)
+            Text(
+                text = "RateMyProf.",
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Icon(Icons.Default.Person, contentDescription = "Profile", tint = Color.Black)
+        }
 
+        Spacer(modifier = Modifier.height(60.dp))
+
+        Text(
+            text = "Welcome Back,\n$studentName !!!",
+            fontSize = 40.sp,
+            color = Color.Black,
+            fontFamily = FontFamily.Default, // Replace with RedRoseFamily if defined
+            lineHeight = 50.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp)
+        )
+
+        Spacer(modifier = Modifier.height(50.dp))
+
+        // Green Rectangle Container
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(scrollState)
-                .padding(top = 30.dp),
+                .fillMaxWidth()
+                .background(Color(0xFFDDE8CC), RoundedCornerShape(16.dp))
+                .padding(bottom = 30.dp)
+                .heightIn(min = 400.dp),
             verticalArrangement = Arrangement.Top
         ) {
-            // Top Bar
+            // Info Cards
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 25.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Icon(Icons.Default.Menu, contentDescription = "Menu", tint = Color.Black)
-                Text(
-                    text = "RateMyProf.",
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
+                StatCard(
+                    title = "No. of\nProfs.",
+                    count = professorsCount,
+                    modifier = Modifier.weight(1f)
                 )
-                Icon(Icons.Default.Person, contentDescription = "Profile", tint = Color.Black)
+                StatCard(
+                    title = "No. of\nStudents.",
+                    count = studentsCount,
+                    modifier = Modifier.weight(1f)
+                )
+                StatCard(
+                    title = "No. of\nReviews.",
+                    count = reviewsCount,
+                    modifier = Modifier.weight(1f)
+                )
             }
 
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "Welcome Back,\n$studentName !!!",
-                fontSize = 40.sp,
+                text = "Rate, Review, and\nDiscover professors,\nto achieve academic\nexcellence.",
+                fontSize = 30.sp,
                 color = Color.Black,
-                fontFamily = RedRoseFamily,
-                lineHeight = 50.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp)
+                textAlign = TextAlign.Center,
+                lineHeight = 35.sp,
+                modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-            // Green Rectangle
-            Column(
+            Button(
+                onClick = { /* TODO: Navigate to rating screen */ },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(0xFFDDE8CC), RoundedCornerShape(16.dp))
-                    .heightIn(min = screenHeight - 200.dp) // Adjust 200.dp based on top content height
-                    .padding(bottom = 30.dp),
-                verticalArrangement = Arrangement.Top
+                    .height(50.dp)
+                    .padding(horizontal = 20.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8BC34A))
             ) {
-                // Info Cards
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    StatCard(
-                        title = "No. of\nProfs.",
-                        count = professorsCount,
-                        modifier = Modifier.weight(1f)
-                    )
-                    StatCard(
-                        title = "No. of\nStudents.",
-                        count = studentsCount,
-                        modifier = Modifier.weight(1f)
-                    )
-                    StatCard(
-                        title = "No. of\nReviews.",
-                        count = reviewsCount,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Text(
-                    text = "Rate, Review, and\nDiscover professors,\nto achieve academic\nexcellence.",
-                    fontSize = 30.sp,
-                    color = Color.Black,
-                    textAlign = TextAlign.Center,
-                    lineHeight = 35.sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Button(
-                    onClick = { /* TODO: Navigate to rating screen */ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp).padding(horizontal = 20.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8BC34A))
-                ) {
-                    Text("Start Rating", fontSize = 25.sp, color = Color.White)
-                }
+                Text("Start Rating", fontSize = 25.sp, color = Color.White)
             }
         }
     }
@@ -195,7 +193,7 @@ fun StatCard(title: String, count: Int, modifier: Modifier = Modifier) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun StudentDashboardPreview() {
     RateMyProfTheme {

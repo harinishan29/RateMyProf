@@ -41,6 +41,7 @@ fun NewCollegeForm() {
     var collegeName by remember { mutableStateOf("") }
     var university by remember { mutableStateOf("") }
     var isDropdownExpanded by remember { mutableStateOf(false) }
+
     val universityList = listOf("Saveetha University", "Anna University", "SRM University")
 
     var officialEmail by remember { mutableStateOf("") }
