@@ -38,6 +38,11 @@
             android:label="ProfessorLogin"
             android:theme="@style/Theme.RateMyProf" />
         <activity
+            android:name=".FeedbackActivity"
+            android:exported="true"
+            android:label="Feedback"
+            android:theme="@style/Theme.RateMyProf" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
