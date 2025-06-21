@@ -26,13 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 
-class MainActivity : ComponentActivity() {
+class ProfessorRatingScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             RateMyProfTheme {
                 Surface {
-                    ProfessorRatingScreen()
+                    ProfessorRatingScreen2()
                 }
             }
         }
@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfessorRatingScreen() {
+fun ProfessorRatingScreen2() {
     val scrollState = rememberScrollState()
     val ratingCategories = listOf(
         "Teaching Style",

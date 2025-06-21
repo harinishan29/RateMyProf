@@ -39,7 +39,7 @@
             android:theme="@style/Theme.RateMyProf" />
         <activity
             android:name=".FeedbackActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="Feedback"
             android:theme="@style/Theme.RateMyProf" />
         <activity
