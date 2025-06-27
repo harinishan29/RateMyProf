@@ -79,7 +79,7 @@ fun FeedbackUI() {
                 .background(Color.White),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
             Image(
                 painter = painterResource(id = R.drawable.prof1),
@@ -105,7 +105,7 @@ fun FeedbackUI() {
                 color = Color.White
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(50.dp))
 
             Text(
                 text = "Your Feedback",

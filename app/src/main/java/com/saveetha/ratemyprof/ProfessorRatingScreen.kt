@@ -206,6 +206,9 @@ fun StarRatingBar(
 @Composable
 fun ProfessorRatingScreenPreview() {
     RateMyProfTheme {
-        ProfessorRatingScreen()
+        Surface {
+            ProfessorRatingScreen2()
+        }
     }
 }
+

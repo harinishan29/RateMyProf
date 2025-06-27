@@ -3,10 +3,9 @@ package com.saveetha.ratemyprof
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,17 +14,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
-import com.saveetha.ratemyprof.R
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 
-class FormSubmittedActivity : ComponentActivity() {
+class FeedbackPosted : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             RateMyProfTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
-                    FormSubmittedScreen(onGoHomeClicked = {
-                        // TODO: Navigate back to home
+                    FeedbackPostedScreen(onGoHomeClicked = {
+                        // TODO: Navigate to home or dashboard
                     })
                 }
             }
@@ -34,7 +32,7 @@ class FormSubmittedActivity : ComponentActivity() {
 }
 
 @Composable
-fun FormSubmittedScreen(onGoHomeClicked: () -> Unit) {
+fun FeedbackPostedScreen(onGoHomeClicked: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -51,9 +49,8 @@ fun FormSubmittedScreen(onGoHomeClicked: () -> Unit) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-
         Icon(
-            painter = painterResource(id = R.drawable.mailbox), // Your vector/PNG icon
+            painter = painterResource(id = R.drawable.mailbox), // Ensure this drawable exists
             contentDescription = null,
             modifier = Modifier
                 .size(100.dp)
@@ -62,7 +59,7 @@ fun FormSubmittedScreen(onGoHomeClicked: () -> Unit) {
         )
 
         Text(
-            text = "Thank you",
+            text = "Feedback Posted!",
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Black
@@ -71,7 +68,7 @@ fun FormSubmittedScreen(onGoHomeClicked: () -> Unit) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "Your message has been received.\nOne of our team members will be\nin touch with you shortly.",
+            text = "Your feedback has been successfully posted.",
             fontSize = 16.sp,
             color = Color.Gray,
             lineHeight = 22.sp,
@@ -94,9 +91,10 @@ fun FormSubmittedScreen(onGoHomeClicked: () -> Unit) {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun FormSubmittedScreenPreview() {
+fun FeedbackPostedScreenPreview() {
     RateMyProfTheme {
-        FormSubmittedScreen(onGoHomeClicked = {})
+        FeedbackPostedScreen(onGoHomeClicked = {})
     }
 }
+
 

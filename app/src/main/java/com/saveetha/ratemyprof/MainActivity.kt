@@ -39,10 +39,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             RateMyProfTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    InitialPage()
                 }
             }
         }
@@ -61,7 +58,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun InitialPage() {
-
 
     Column(
         modifier = Modifier
