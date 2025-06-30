@@ -5,9 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Person
@@ -56,14 +56,12 @@ fun ProfessorRatingsScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 20.dp)
                 .verticalScroll(rememberScrollState())
+                .padding(horizontal = 20.dp, vertical = 20.dp)
         ) {
             // Top Bar
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 25.dp),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -83,8 +81,7 @@ fun ProfessorRatingsScreen(
             Text(
                 text = "Hello, $professorName!",
                 fontSize = 26.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(horizontal = 20.dp)
+                fontWeight = FontWeight.Bold
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -95,7 +92,6 @@ fun ProfessorRatingsScreen(
                 colors = CardDefaults.cardColors(containerColor = Color(0xFFCCE5B1)),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
                     .height(120.dp)
             ) {
                 Column(
@@ -119,12 +115,14 @@ fun ProfessorRatingsScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             // Star-wise Breakdown
-            Column(modifier = Modifier.padding(horizontal = 20.dp)) {
+            Column {
                 ratingPercentages.toSortedMap(reverseOrder()).forEach { (stars, percent) ->
                     RatingBreakdownBar(stars = stars, percentage = percent)
                     Spacer(modifier = Modifier.height(12.dp))
                 }
             }
+
+            Spacer(modifier = Modifier.height(40.dp)) // bottom space for scroll comfort
         }
     }
 }
@@ -168,7 +166,7 @@ fun ProfessorRatingsScreenPreview() {
             professorName = "Dr. Rachel",
             averageRating = 4.6f,
             ratingPercentages = mapOf(
-                5 to 60,
+                5 to 80,
                 4 to 25,
                 3 to 10,
                 2 to 3,

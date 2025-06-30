@@ -37,7 +37,6 @@ class NewCollegeFormActivity : ComponentActivity() {
 @Composable
 fun NewCollegeForm() {
     val focusManager = LocalFocusManager.current
-
     var collegeName by remember { mutableStateOf("") }
     var university by remember { mutableStateOf("") }
     var isDropdownExpanded by remember { mutableStateOf(false) }
