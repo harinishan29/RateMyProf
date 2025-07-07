@@ -1,8 +1,5 @@
 package com.saveetha.ratemyprof
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
@@ -20,24 +17,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.tooling.preview.Preview
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 
-class AdminLogin : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            RateMyProfTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = Color.White
-                ) {
-                    AdminLoginScreen()
-                }
-            }
-        }
-    }
-}
 
 @Composable
-fun AdminLoginScreen() {
+fun AdminLoginScreen(onLoginSuccess: () -> Unit) {
     val focusManager = LocalFocusManager.current
 
     var username by remember { mutableStateOf("") }
@@ -95,6 +77,7 @@ fun AdminLoginScreen() {
 
         Button(
             onClick = {
+                onLoginSuccess()
                 focusManager.clearFocus()
                 // TODO: Add admin login logic
             },
@@ -117,6 +100,6 @@ fun AdminLoginScreen() {
 @Composable
 fun AdminLoginScreenPreview() {
     RateMyProfTheme {
-        AdminLoginScreen()
+        AdminLoginScreen() { true }
     }
 }

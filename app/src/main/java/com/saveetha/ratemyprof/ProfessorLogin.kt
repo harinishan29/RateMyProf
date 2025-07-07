@@ -1,8 +1,5 @@
 package com.saveetha.ratemyprof
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
@@ -20,24 +17,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 
-class ProfessorLogin : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            RateMyProfTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = Color.White
-                ) {
-                    ProfessorLoginScreen()
-                }
-            }
-        }
-    }
-}
 
 @Composable
-fun ProfessorLoginScreen() {
+fun ProfessorLoginScreen(onLoginSuccess: () -> Unit) {
     val focusManager = LocalFocusManager.current
 
     var username by remember { mutableStateOf("") }
@@ -95,6 +77,7 @@ fun ProfessorLoginScreen() {
 
         Button(
             onClick = {
+                onLoginSuccess()
                 focusManager.clearFocus()
                 // TODO: Add professor login logic
             },
@@ -102,7 +85,7 @@ fun ProfessorLoginScreen() {
                 .fillMaxWidth()
                 .height(50.dp),
             shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)) ,
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)),
             elevation = ButtonDefaults.buttonElevation(
                 defaultElevation = 8.dp,
                 pressedElevation = 12.dp
@@ -117,6 +100,6 @@ fun ProfessorLoginScreen() {
 @Composable
 fun ProfessorLoginScreenPreview() {
     RateMyProfTheme {
-        ProfessorLoginScreen()
+        ProfessorLoginScreen() { false }
     }
 }

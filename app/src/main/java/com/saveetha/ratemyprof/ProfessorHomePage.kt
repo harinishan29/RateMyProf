@@ -147,45 +147,18 @@ fun ProfessorDashboardScreen(
     }
 }
 
-//@Composable
-//fun StatCard(title: String, count: Int, modifier: Modifier = Modifier) {
-//    Column(
-//        modifier = modifier.padding(horizontal = 6.dp),
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Spacer(modifier = Modifier.height(30.dp))
-//        Card(
-//            shape = RoundedCornerShape(12.dp),
-//            colors = CardDefaults.cardColors(containerColor = Color.White),
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .height(130.dp)
-//                .padding(bottom = 8.dp)
-//        ) {
-//            Box(
-//                contentAlignment = Alignment.Center,
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .padding(vertical = 16.dp)
-//            ) {
-//                Text(
-//                    text = title,
-//                    fontSize = 20.sp,
-//                    fontWeight = FontWeight.SemiBold,
-//                    color = Color(0xFF4CAF50),
-//                    textAlign = TextAlign.Center,
-//                    modifier = Modifier.fillMaxWidth()
-//                )
-//            }
-//        }
-//
-//        Text(
-//            text = count.toString(),
-//            fontSize = 40.sp,
-//            color = Color.Black
-//        )
-//    }
-//}
+@Composable
+fun ProfessorDashboard() {
+    RateMyProfTheme {
+        ProfessorDashboardScreen(
+            professorName = "Rachel",
+            profCount = 120,
+            studentCount = 350,
+            reviewCount = 210
+        )
+    }
+}
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

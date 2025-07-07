@@ -1,9 +1,7 @@
 package com.saveetha.ratemyprof
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -14,30 +12,14 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.tooling.preview.Preview
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 
-class StudentLogin : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            RateMyProfTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = Color.White
-                ) {
-                    StudentLoginScreen()
-                }
-            }
-        }
-    }
-}
 
 @Composable
-fun StudentLoginScreen() {
+fun StudentLoginScreen(onLoginSuccess: () -> Unit) {
     val focusManager = LocalFocusManager.current
 
     var regNumber by remember { mutableStateOf("") }
@@ -95,6 +77,7 @@ fun StudentLoginScreen() {
 
         Button(
             onClick = {
+                onLoginSuccess()
                 focusManager.clearFocus()
                 // TODO: Add login logic
             },
@@ -117,7 +100,7 @@ fun StudentLoginScreen() {
 @Composable
 fun StudentLoginScreenPreview() {
     RateMyProfTheme {
-        StudentLoginScreen()
+        StudentLoginScreen() {}
     }
 }
 
