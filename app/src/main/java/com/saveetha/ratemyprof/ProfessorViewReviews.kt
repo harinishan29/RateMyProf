@@ -1,4 +1,4 @@
-package com.saveetha.ratemyprof
+ package com.saveetha.ratemyprof
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
