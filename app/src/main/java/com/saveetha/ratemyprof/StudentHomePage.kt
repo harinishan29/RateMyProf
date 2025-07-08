@@ -43,6 +43,7 @@ class StudentHomePage : ComponentActivity() {
     }
 }
 
+
 @Composable
 fun StudentDashboardScreen(
     studentName: String,
@@ -189,6 +190,18 @@ fun StatCard(title: String, count: Int, modifier: Modifier = Modifier) {
             text = count.toString(),
             fontSize = 40.sp,
             color = Color.Black
+        )
+    }
+}
+
+@Composable
+fun StudentDashboardScreen() {
+    RateMyProfTheme {
+        StudentDashboardScreen(
+            studentName = "Rachel",
+            professorsCount = 120,
+            studentsCount = 350,
+            reviewsCount = 210
         )
     }
 }
