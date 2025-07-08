@@ -11,6 +11,9 @@ sealed class Screen(val route: String) {
 
     // After Login - Home/Dashboard Screens
     object StudentHome : Screen("StudentHomeScreen")
+
+        object ProfessorList : Screen("ProfessorListScreen")
+
     object ProfessorHome : Screen("ProfessorDashboardScreen")
     object AdminDashboard : Screen("AdminDashboardScreen")
 }

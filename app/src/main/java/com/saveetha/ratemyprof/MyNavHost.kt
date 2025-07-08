@@ -29,7 +29,15 @@ fun MyNavHost(navController: NavHostController) {
             )
         }
         composable(Screen.StudentHome.route) {
-            StudentDashboardScreen()
+            StudentDashboardScreenNav(
+                onClickStartRate = {
+                    navController.navigate(Screen.ProfessorList.route)
+                }
+            )
+        }
+
+        composable (Screen.ProfessorList.route){
+            ProfessorListScreen()
         }
 
         // Professor Flow

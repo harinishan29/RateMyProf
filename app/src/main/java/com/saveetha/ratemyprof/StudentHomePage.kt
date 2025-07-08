@@ -1,8 +1,5 @@
 package com.saveetha.ratemyprof
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -23,25 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
-// import com.saveetha.ratemyprof.ui.theme.RedRoseFamily // Uncomment only if you have defined this
-
-class StudentHomePage : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            RateMyProfTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
-                    StudentDashboardScreen(
-                        studentName = "Rachel",
-                        professorsCount = 120,
-                        studentsCount = 350,
-                        reviewsCount = 210
-                    )
-                }
-            }
-        }
-    }
-}
 
 
 @Composable
@@ -49,7 +27,8 @@ fun StudentDashboardScreen(
     studentName: String,
     professorsCount: Int,
     studentsCount: Int,
-    reviewsCount: Int
+    reviewsCount: Int,
+    onClickStartRate: () -> Unit
 ) {
     val scrollState = rememberScrollState()
 
@@ -140,7 +119,7 @@ fun StudentDashboardScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
-                onClick = { /* TODO: Navigate to rating screen */ },
+                onClick = { onClickStartRate() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -195,13 +174,14 @@ fun StatCard(title: String, count: Int, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun StudentDashboardScreen() {
+fun StudentDashboardScreenNav(onClickStartRate: () -> Unit) {
     RateMyProfTheme {
         StudentDashboardScreen(
             studentName = "Rachel",
             professorsCount = 120,
             studentsCount = 350,
-            reviewsCount = 210
+            reviewsCount = 210,
+            onClickStartRate = onClickStartRate
         )
     }
 }
@@ -210,11 +190,13 @@ fun StudentDashboardScreen() {
 @Composable
 fun StudentDashboardPreview() {
     RateMyProfTheme {
+
         StudentDashboardScreen(
             studentName = "Rachel",
             professorsCount = 120,
             studentsCount = 350,
-            reviewsCount = 210
+            reviewsCount = 210,
+            onClickStartRate = {}
         )
     }
 }
