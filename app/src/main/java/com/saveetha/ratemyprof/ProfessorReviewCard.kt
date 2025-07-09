@@ -28,13 +28,14 @@ fun ProfessorReviewCard(
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(10.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(Color(0xFFD9EAD3))
             .padding(12.dp)
-    ) {
+    )
+    {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painter = painterResource(id = imageRes),

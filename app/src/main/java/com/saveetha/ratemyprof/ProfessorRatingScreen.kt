@@ -1,5 +1,6 @@
 package com.saveetha.ratemyprof
 
+import android.content.Intent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,8 +12,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -25,6 +28,8 @@ import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfessorRatingScreen2(professor: ProfessorData) {
+
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
     val ratingCategories = listOf(
         "Teaching Style",
@@ -142,15 +147,19 @@ fun ProfessorRatingScreen2(professor: ProfessorData) {
 
             // Submit button
             Button(
-                onClick = { /* Submit Action */ },
+                onClick = {
+                    val intent = Intent(context, FeedbackActivity::class.java)
+                    context.startActivity(intent)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)),
                 shape = RoundedCornerShape(12.dp)
             ) {
-                Text("Submit", color = Color.White,fontSize = 20.sp)
+                Text("Submit", color = Color.White, fontSize = 20.sp)
             }
+
         }
     }
 }

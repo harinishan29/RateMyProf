@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import android.net.Uri
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -88,17 +89,20 @@ fun ProfessorListScreen(navController: NavHostController) {
                 title = it.title,
                 rating = it.rating,
                 imageRes = it.imageRes,
-                modifier = Modifier.padding(horizontal = 16.dp).clickable {
-                    navController.navigate(
-                        Screen.ProfessorRating.passData(
-                            it.name,
-                            it.title,
-                            it.rating,
-                            it.imageRes
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .clickable {
+                        navController.navigate(
+                            Screen.ProfessorRating.passData(
+                                Uri.encode(it.name),
+                                Uri.encode(it.title),
+                                it.rating,
+                                it.imageRes
+                            )
                         )
-                    )
-                }
+                    }
             )
+
             Spacer(modifier = Modifier.height(8.dp))
         }
 

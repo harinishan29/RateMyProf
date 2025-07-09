@@ -3,6 +3,7 @@ package com.saveetha.ratemyprof
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
+import android.net.Uri
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
@@ -51,8 +52,8 @@ fun MyNavHost(navController: NavHostController) {
                 navArgument("imageRes") { type = NavType.IntType }
             )
         ) { backStackEntry ->
-            val name = backStackEntry.arguments?.getString("name") ?: ""
-            val title = backStackEntry.arguments?.getString("title") ?: ""
+            val name = Uri.decode(backStackEntry.arguments?.getString("name") ?: "")
+            val title = Uri.decode(backStackEntry.arguments?.getString("title") ?: "")
             val rating = backStackEntry.arguments?.getFloat("rating") ?: 0f
             val imageRes = backStackEntry.arguments?.getInt("imageRes") ?: R.drawable.prof1
 

@@ -71,83 +71,93 @@ fun FeedbackUI() {
         }
     ) { innerPadding ->
 
-        Column(
+        Box(
             modifier = Modifier
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
                 .fillMaxSize()
-                .background(Color.White),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .background(Color.White)
         ) {
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Image(
-                painter = painterResource(id = R.drawable.prof1),
-                contentDescription = "Professor Photo",
+            Column(
                 modifier = Modifier
-                    .size(100.dp)
-                    .clip(CircleShape)
-                    .border(2.dp, Color.White, CircleShape)
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "Mrs. Phoebe",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
-
-            Text(
-                text = "Assistant professor",
-                fontSize = 14.sp,
-                color = Color.White
-            )
-
-            Spacer(modifier = Modifier.height(50.dp))
-
-            Text(
-                text = "Your Feedback",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                color = Color.Black,
-                modifier = Modifier.padding(bottom = 12.dp)
-            )
-
-            OutlinedTextField(
-                value = feedbackText,
-                onValueChange = { feedbackText = it },
-                placeholder = {
-                    Text("Enter your feedback..")
-                },
-                modifier = Modifier
+                    .padding(innerPadding)
+                    .verticalScroll(rememberScrollState())
+                    .fillMaxHeight()
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .height(150.dp),
-                shape = RoundedCornerShape(12.dp),
-                textStyle = TextStyle(textAlign = TextAlign.Start),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF7CA153),
-                    unfocusedBorderColor = Color.LightGray
-                )
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Button(
-                onClick = { /* Submit action */ },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7CA153)),
-                modifier = Modifier
-                    .padding(horizontal = 40.dp)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
+                    .background(Color.White),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Submit", color = Color.White)
-            }
+                Spacer(modifier = Modifier.height(30.dp))
 
-            Spacer(modifier = Modifier.height(24.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.prof1),
+                    contentDescription = "Professor Photo",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(CircleShape)
+                        .border(2.dp, Color.White, CircleShape)
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "Mrs. Phoebe",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+
+                Text(
+                    text = "Assistant professor",
+                    fontSize = 14.sp,
+                    color = Color.Black
+                )
+
+                Spacer(modifier = Modifier.height(50.dp))
+
+                Text(
+                    text = "Your Feedback",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    color = Color.Black,
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
+
+                OutlinedTextField(
+                    value = feedbackText,
+                    onValueChange = { feedbackText = it },
+                    placeholder = {
+                        Text(text = "Enter your feedback..", color = Color.Black)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                        .height(150.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Start),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFF7CA153),
+                        unfocusedBorderColor = Color.LightGray
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Button(
+                    onClick = { /* Submit action */ },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7CA153)),
+                    modifier = Modifier
+                        .padding(horizontal = 40.dp)
+                        .fillMaxWidth(),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text("Submit", color = Color.White)
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+            }
         }
+
+
     }
 }
 
