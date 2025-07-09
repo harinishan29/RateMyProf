@@ -2,8 +2,10 @@ package com.saveetha.ratemyprof
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 
 @Composable
 fun MyNavHost(navController: NavHostController) {
@@ -36,12 +38,27 @@ fun MyNavHost(navController: NavHostController) {
             )
         }
 
-        composable (Screen.ProfessorList.route){
+        composable(Screen.ProfessorList.route) {
             ProfessorListScreen(navController)
         }
 
-        composable(Screen.ProfessorRating.route){
-            ProfessorRatingScreen2()
+        composable(
+            route = Screen.ProfessorRating.route,
+            arguments = listOf(
+                navArgument("name") { type = NavType.StringType },
+                navArgument("title") { type = NavType.StringType },
+                navArgument("rating") { type = NavType.FloatType },
+                navArgument("imageRes") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val name = backStackEntry.arguments?.getString("name") ?: ""
+            val title = backStackEntry.arguments?.getString("title") ?: ""
+            val rating = backStackEntry.arguments?.getFloat("rating") ?: 0f
+            val imageRes = backStackEntry.arguments?.getInt("imageRes") ?: R.drawable.prof1
+
+            val professor = ProfessorData(name, title, rating, imageRes)
+
+            ProfessorRatingScreen2(professor)
         }
 
         // Professor Flow
