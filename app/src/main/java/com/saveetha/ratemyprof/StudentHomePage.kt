@@ -39,7 +39,7 @@ fun StudentDashboardScreen(
             .padding(top = 30.dp),
         verticalArrangement = Arrangement.Top
     ) {
-        // Top Bar
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()

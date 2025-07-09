@@ -1,11 +1,7 @@
 package com.saveetha.ratemyprof
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -18,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,7 +24,7 @@ import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfessorRatingScreen2() {
+fun ProfessorRatingScreen2(professor: ProfessorData) {
     val scrollState = rememberScrollState()
     val ratingCategories = listOf(
         "Teaching Style",
@@ -193,9 +188,12 @@ fun StarRatingBar(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun ProfessorRatingScreenPreview() {
+
+    val professor = ProfessorData("Rachel", "Associative professor", 3f, R.drawable.prof1 )
+
     RateMyProfTheme {
         Surface {
-            ProfessorRatingScreen2()
+            ProfessorRatingScreen2(professor)
         }
     }
 }
