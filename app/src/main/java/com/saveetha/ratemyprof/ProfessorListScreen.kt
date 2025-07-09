@@ -1,5 +1,6 @@
 package com.saveetha.ratemyprof
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,13 +27,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 
 data class ProfessorData(val name: String, val title: String, val rating: Float, val imageRes: Int)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfessorListScreen() {
+fun ProfessorListScreen(navController: NavHostController) {
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
 
     val professors = listOf(
@@ -84,7 +87,17 @@ fun ProfessorListScreen() {
                 name = it.name,
                 title = it.title,
                 rating = it.rating,
-                imageRes = it.imageRes
+                imageRes = it.imageRes,
+                modifier = Modifier.padding(horizontal = 16.dp).clickable {
+                    navController.navigate(
+                        Screen.ProfessorRating.passData(
+                            it.name,
+                            it.title,
+                            it.rating,
+                            it.imageRes
+                        )
+                    )
+                }
             )
             Spacer(modifier = Modifier.height(8.dp))
         }
@@ -97,6 +110,6 @@ fun ProfessorListScreen() {
 @Composable
 fun ProfessorListScreenPreview() {
     RateMyProfTheme {
-        ProfessorListScreen()
+        ProfessorListScreen(navController = rememberNavController())
     }
 }

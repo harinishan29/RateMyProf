@@ -24,7 +24,8 @@ fun ProfessorReviewCard(
     name: String,
     title: String,
     rating: Float,
-    imageRes: Int
+    imageRes: Int,
+    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = Modifier

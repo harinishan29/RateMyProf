@@ -14,6 +14,12 @@ sealed class Screen(val route: String) {
 
         object ProfessorList : Screen("ProfessorListScreen")
 
+        object ProfessorRating : Screen("ProfessorRatingScreen/{name}/{title}/{rating}/{imageRes}") {
+            fun passData(name: String, title: String, rating: Float, imageRes: Int): String {
+                return "ProfessorRatingScreen/${name}/${title}/${rating}/${imageRes}"
+            }
+        }
+
     object ProfessorHome : Screen("ProfessorDashboardScreen")
     object AdminDashboard : Screen("AdminDashboardScreen")
 }

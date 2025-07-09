@@ -37,7 +37,11 @@ fun MyNavHost(navController: NavHostController) {
         }
 
         composable (Screen.ProfessorList.route){
-            ProfessorListScreen()
+            ProfessorListScreen(navController)
+        }
+
+        composable(Screen.ProfessorRating.route){
+            ProfessorRatingScreen2()
         }
 
         // Professor Flow
