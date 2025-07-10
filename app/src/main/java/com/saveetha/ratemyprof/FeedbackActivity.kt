@@ -1,8 +1,10 @@
 package com.saveetha.ratemyprof
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.navigation.compose.rememberNavController
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -16,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -23,7 +26,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
+
 
 class FeedbackActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +36,7 @@ class FeedbackActivity : ComponentActivity() {
         setContent {
             RateMyProfTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    FeedbackUI()
+                    FeedbackUI(navController = rememberNavController()) // ✅ FIXED
                 }
             }
         }
@@ -40,9 +45,9 @@ class FeedbackActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FeedbackUI() {
+fun FeedbackUI(navController: NavHostController) {
     var feedbackText by remember { mutableStateOf("") }
-
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -143,7 +148,10 @@ fun FeedbackUI() {
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Button(
-                    onClick = { /* Submit action */ },
+                    onClick = {
+                       val intent = Intent(context,FeedbackPostedActivity::class.java)
+                        context.startActivity(intent)
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7CA153)),
                     modifier = Modifier
                         .padding(horizontal = 40.dp)
@@ -156,8 +164,6 @@ fun FeedbackUI() {
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }
-
-
     }
 }
 
@@ -165,6 +171,6 @@ fun FeedbackUI() {
 @Composable
 fun FeedbackUIPreview() {
     RateMyProfTheme {
-        FeedbackUI()
+       FeedbackUI(rememberNavController())
     }
 }

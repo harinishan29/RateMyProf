@@ -62,7 +62,21 @@ fun MyNavHost(navController: NavHostController) {
             ProfessorRatingScreen2(professor)
         }
 
-        // Professor Flow
+        composable(Screen.Feedback.route) {
+            FeedbackUI(navController)
+        }
+
+        composable(Screen.FeedbackPosted.route) {
+            FeedbackPostedScreen(
+                onGoHomeClicked = {
+                    navController.navigate(Screen.ProfessorHome.route) {
+                        popUpTo(Screen.FeedbackPosted.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+
         composable(Screen.ProfessorLogin.route) {
             ProfessorLoginScreen(
                 onLoginSuccess = { navController.navigate(Screen.ProfessorHome.route) }

@@ -20,6 +20,10 @@ sealed class Screen(val route: String) {
             }
         }
 
+    object Feedback : Screen("FeedbackUI")
+    object FeedbackPosted : Screen("FeedbackPostedScreen")
+
+
     object ProfessorHome : Screen("ProfessorDashboardScreen")
     object AdminDashboard : Screen("AdminDashboardScreen")
 }

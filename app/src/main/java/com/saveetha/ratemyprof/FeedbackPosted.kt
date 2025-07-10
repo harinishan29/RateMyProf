@@ -1,6 +1,9 @@
 package com.saveetha.ratemyprof
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -9,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -16,16 +20,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 
-class FeedbackPosted : ComponentActivity() {
+
+public class FeedbackPostedActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             RateMyProfTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
-                    FeedbackPostedScreen(onGoHomeClicked = {
-                        // TODO: Navigate to home or dashboard
-                    })
-                }
+                FeedbackPostedScreen(onGoHomeClicked = {})
             }
         }
     }
@@ -33,6 +35,8 @@ class FeedbackPosted : ComponentActivity() {
 
 @Composable
 fun FeedbackPostedScreen(onGoHomeClicked: () -> Unit) {
+
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -78,7 +82,11 @@ fun FeedbackPostedScreen(onGoHomeClicked: () -> Unit) {
         Spacer(modifier = Modifier.height(32.dp))
 
         Button(
-            onClick = onGoHomeClicked,
+            onClick = {
+                val intent = Intent(context, StudentHomePage::class.java)
+                context.startActivity(intent)
+                (context as? Activity)?.finishAffinity()
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
