@@ -1,6 +1,8 @@
 package com.saveetha.ratemyprof
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -18,23 +20,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.saveetha.ratemyprof.R
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 
-class FormSubmittedActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            RateMyProfTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
-                    FormSubmittedScreen(onGoHomeClicked = {
-                        // TODO: Navigate back to home
-                    })
-                }
-            }
-        }
-    }
-}
+
 
 @Composable
 fun FormSubmittedScreen(onGoHomeClicked: () -> Unit) {
+    // ✅ Auto-trigger onGoHomeClicked after 5 seconds
+    LaunchedEffect(Unit) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            onGoHomeClicked()
+        }, 5000)
+    }
+
+    // ✅ Handle system back press
+    BackHandler(enabled = true) {
+        onGoHomeClicked()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -51,9 +52,8 @@ fun FormSubmittedScreen(onGoHomeClicked: () -> Unit) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-
         Icon(
-            painter = painterResource(id = R.drawable.mailbox), // Your vector/PNG icon
+            painter = painterResource(id = R.drawable.mailbox),
             contentDescription = null,
             modifier = Modifier
                 .size(100.dp)
@@ -79,18 +79,14 @@ fun FormSubmittedScreen(onGoHomeClicked: () -> Unit) {
         )
 
         Spacer(modifier = Modifier.height(32.dp))
-
-        Button(
-            onClick = onGoHomeClicked,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8BC34A))
-        ) {
-            Text(text = "Go Home", color = Color.White, fontSize = 16.sp)
-        }
     }
 }
+
+@Composable
+fun BackHandler(enabled: Boolean, content: @Composable () -> Unit) {
+    TODO("Not yet implemented")
+}
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

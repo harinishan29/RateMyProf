@@ -8,6 +8,9 @@ sealed class Screen(val route: String) {
     object StudentLogin : Screen("StudentLoginScreen")
     object ProfessorLogin : Screen("ProfessorLoginScreen")
     object AdminLogin : Screen("AdminLoginScreen")
+    object NewCollegeForm : Screen("NewCollegeForm")
+
+    object FormSubmitted : Screen("FormSubmittedScreen")
 
     // After Login - Home/Dashboard Screens
     object StudentHome : Screen("StudentHomeScreen")

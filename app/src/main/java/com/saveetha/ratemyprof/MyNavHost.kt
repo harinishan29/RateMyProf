@@ -16,7 +16,7 @@ fun MyNavHost(navController: NavHostController) {
                 onStudentClick = { navController.navigate(Screen.StudentLogin.route) },
                 onProfessorClick = { navController.navigate(Screen.ProfessorLogin.route) },
                 onAdminClick = { navController.navigate(Screen.AdminLogin.route) }
-            )
+            ) { navController.navigate(Screen.NewCollegeForm.route) }
         }
 
 
@@ -75,6 +75,19 @@ fun MyNavHost(navController: NavHostController) {
                 }
             )
         }
+
+        composable(Screen.NewCollegeForm.route) {
+            NewCollegeForm(onFormSubmitted = { navController.navigate(Screen.FormSubmitted.route) })
+        }
+
+        composable(Screen.FormSubmitted.route) {
+            FormSubmittedScreen(onGoHomeClicked = {
+                navController.navigate(Screen.InitialPage.route) {
+                    popUpTo(Screen.FormSubmitted.route) { inclusive = true }
+                }
+            })
+        }
+
 
 
         composable(Screen.ProfessorLogin.route) {

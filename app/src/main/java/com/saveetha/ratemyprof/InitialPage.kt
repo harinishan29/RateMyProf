@@ -26,9 +26,11 @@ import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 import androidx.compose.material3.Scaffold
 
 @Composable
-fun InitialPage(onStudentClick: () -> Unit,
-                onProfessorClick: () -> Unit,
-                onAdminClick: () -> Unit, modifier: Modifier = Modifier) {
+fun InitialPage(
+    onStudentClick: () -> Unit,
+    onProfessorClick: () -> Unit,
+    onAdminClick: () -> Unit, modifier: Modifier = Modifier, onRegisterCollegeClick: () -> Unit
+) {
 
     Column(
         modifier = Modifier
@@ -79,7 +81,7 @@ fun InitialPage(onStudentClick: () -> Unit,
             text = "\uD83C\uDFE2 Register your college ?",
             color = Color(0xFF4CAF50),
             fontSize = 20.sp,
-            modifier = Modifier.clickable { /* Handle registration */ },
+            modifier = Modifier.clickable { onRegisterCollegeClick()},
             style = TextStyle(
                 shadow = Shadow(
                     color = Color.Gray,
@@ -96,7 +98,14 @@ fun InitialPage(onStudentClick: () -> Unit,
 private fun InitialPagePreview() {
     RateMyProfTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            InitialPage(onStudentClick = {}, onProfessorClick = {}, onAdminClick = {}, modifier = Modifier.padding(innerPadding))
+            InitialPage(
+                onStudentClick = {},
+                onProfessorClick = {},
+                onAdminClick = {},
+                onRegisterCollegeClick = {},
+                modifier = Modifier.padding(innerPadding)
+            )
+
         }
     }
 }

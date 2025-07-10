@@ -21,21 +21,21 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.sp
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 
-class NewCollegeFormActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            RateMyProfTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
-                    NewCollegeForm()
-                }
-            }
-        }
-    }
-}
+//class NewCollegeFormActivity : ComponentActivity() {
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContent {
+//            RateMyProfTheme {
+//                Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
+//                    NewCollegeForm { navController.navigate(Screen.FormSubmitted.route) }
+//                }
+//            }
+//        }
+//    }
+//}
 
 @Composable
-fun NewCollegeForm() {
+fun NewCollegeForm(onFormSubmitted: () -> Unit) {
     val focusManager = LocalFocusManager.current
     var collegeName by remember { mutableStateOf("") }
     var university by remember { mutableStateOf("") }
@@ -171,7 +171,7 @@ fun NewCollegeForm() {
 
         Button(
             onClick = {
-                // Submit form logic here
+                onFormSubmitted()
                 focusManager.clearFocus()
             },
             modifier = Modifier
@@ -193,6 +193,6 @@ fun NewCollegeForm() {
 @Composable
 fun NewCollegeFormPreview() {
     RateMyProfTheme {
-        NewCollegeForm()
+        NewCollegeForm(onFormSubmitted = {})
     }
 }
