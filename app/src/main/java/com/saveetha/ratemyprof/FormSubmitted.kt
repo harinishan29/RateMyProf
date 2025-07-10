@@ -36,6 +36,7 @@ fun FormSubmittedScreen(onGoHomeClicked: () -> Unit) {
         onGoHomeClicked()
     }
 
+
     Column(
         modifier = Modifier
             .fillMaxSize()
