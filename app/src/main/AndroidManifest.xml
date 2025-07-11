@@ -18,11 +18,7 @@
 
         <activity android:name=".FeedbackPostedActivity"
             android:exported="false"/>
-        <activity
-            android:name=".FormSubmittedActivity"
-            android:exported="false"
-            android:label="@string/title_activity_form_submitted"
-            android:theme="@style/Theme.RateMyProf" />
+
 
         <activity
             android:name=".FeedbackActivity"

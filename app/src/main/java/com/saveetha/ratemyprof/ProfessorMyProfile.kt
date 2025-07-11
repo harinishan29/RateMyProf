@@ -39,7 +39,7 @@ class ProfessorMyProfile : ComponentActivity() {
                         phone = "+91 98765 43210"
                     ),
                     onLogoutClick = { finish() },
-                    onEditProfileClick = { /* Edit action */ }
+                    onEditProfileClick = {  }
                 )
             }
         }

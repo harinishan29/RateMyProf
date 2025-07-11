@@ -1,11 +1,6 @@
-package com.saveetha.ratemyprof
-
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -17,25 +12,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
-import com.saveetha.ratemyprof.R
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
-
-
+import com.saveetha.ratemyprof.R
 
 @Composable
 fun FormSubmittedScreen(onGoHomeClicked: () -> Unit) {
-    // ✅ Auto-trigger onGoHomeClicked after 5 seconds
     LaunchedEffect(Unit) {
         Handler(Looper.getMainLooper()).postDelayed({
             onGoHomeClicked()
         }, 5000)
     }
 
-    // ✅ Handle system back press
     BackHandler(enabled = true) {
         onGoHomeClicked()
     }
-
 
     Column(
         modifier = Modifier
@@ -83,12 +73,6 @@ fun FormSubmittedScreen(onGoHomeClicked: () -> Unit) {
     }
 }
 
-@Composable
-fun BackHandler(enabled: Boolean, content: @Composable () -> Unit) {
-    TODO("Not yet implemented")
-}
-
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun FormSubmittedScreenPreview() {
@@ -96,4 +80,3 @@ fun FormSubmittedScreenPreview() {
         FormSubmittedScreen(onGoHomeClicked = {})
     }
 }
-
