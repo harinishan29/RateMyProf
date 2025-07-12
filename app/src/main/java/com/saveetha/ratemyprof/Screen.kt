@@ -23,10 +23,17 @@ sealed class Screen(val route: String) {
             }
         }
 
+        object ProfessorViewRating : Screen("ProfessorViewRating")
+        object ProfessorViewReviews : Screen("ProfessorViewReviews")
+
+
+
     object Feedback : Screen("FeedbackUI")
     object FeedbackPosted : Screen("FeedbackPostedScreen")
 
 
     object ProfessorHome : Screen("ProfessorDashboardScreen")
-    object AdminDashboard : Screen("AdminDashboardScreen")
+    object AdminDashboard : Screen("AdminHomeScreen")
+    object CreateProfessor : Screen("CreateProfessorScreen")
+
 }

@@ -97,14 +97,51 @@ fun MyNavHost(navController: NavHostController) {
             )
         }
         composable(Screen.ProfessorHome.route) {
-            ProfessorDashboard()
+            ProfessorDashboard(navController)
         }
+
+
+        composable(Screen.ProfessorViewRating.route) {
+            ProfessorRatingsScreen(
+                professorName = "Dr. Rachel", // You can pass this dynamically later if needed
+                averageRating = 4.6f,
+                ratingPercentages = mapOf(
+                    5 to 60,
+                    4 to 25,
+                    3 to 10,
+                    2 to 3,
+                    1 to 2
+                ),
+                onBackClick = { navController.popBackStack() }
+            )
+        }
+
+        composable(Screen.ProfessorViewReviews.route) {
+            ProfessorReviewsScreen(
+                professorName = "Dr. Rachel",
+                reviews = sampleReviews,
+                onBackClick = { navController.popBackStack() }
+            )
+        }
+
 
         // Admin Flow
         composable(Screen.AdminLogin.route) {
             AdminLoginScreen(
-                onLoginSuccess = { navController.navigate(Screen.AdminDashboard.route) }
+                onLoginSuccess = {
+                    navController.navigate(Screen.AdminDashboard.route) {
+                        popUpTo(Screen.AdminLogin.route) { inclusive = true }
+                    }
+                }
             )
+        }
+
+        composable (Screen.AdminDashboard.route){
+            AdminHomeScreen()
+        }
+
+        composable(Screen.CreateProfessor.route) {
+            CreateProfessorScreen()
         }
 
     }

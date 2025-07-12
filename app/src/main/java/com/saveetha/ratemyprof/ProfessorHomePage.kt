@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 
 class ProfessorHomePage : ComponentActivity() {
@@ -32,7 +33,9 @@ class ProfessorHomePage : ComponentActivity() {
                         professorName = "Rachel",
                         profCount = 120,
                         studentCount = 350,
-                        reviewCount = 210
+                        reviewCount = 210,
+                        onViewRatingsClick = { /* Optional: show Toast or do nothing here */ },
+                        onViewReviewsClick = { /* Optional */ }
                     )
                 }
             }
@@ -40,13 +43,17 @@ class ProfessorHomePage : ComponentActivity() {
     }
 }
 
+
 @Composable
 fun ProfessorDashboardScreen(
     professorName: String,
     profCount: Int,
     studentCount: Int,
-    reviewCount: Int
-) {
+    reviewCount: Int,
+    onViewRatingsClick: () -> Unit,
+    onViewReviewsClick: () -> Unit
+)
+ {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -121,7 +128,7 @@ fun ProfessorDashboardScreen(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Button(
-                        onClick = { /* TODO: Navigate to View Ratings */ },
+                        onClick = onViewRatingsClick,
                         modifier = Modifier
                             .weight(1f)
                             .height(50.dp)
@@ -132,7 +139,7 @@ fun ProfessorDashboardScreen(
                     }
 
                     Button(
-                        onClick = { /* TODO: Navigate to View Reviews */ },
+                        onClick = onViewReviewsClick,
                         modifier = Modifier
                             .weight(1f)
                             .height(50.dp)
@@ -148,16 +155,24 @@ fun ProfessorDashboardScreen(
 }
 
 @Composable
-fun ProfessorDashboard() {
+fun ProfessorDashboard(navController: NavHostController) {
     RateMyProfTheme {
         ProfessorDashboardScreen(
             professorName = "Rachel",
             profCount = 120,
             studentCount = 350,
-            reviewCount = 210
+            reviewCount = 210,
+            onViewRatingsClick = {
+                navController.navigate(Screen.ProfessorViewRating.route)
+            },
+            onViewReviewsClick = {
+                navController.navigate(Screen.ProfessorViewReviews.route)
+            }
+
         )
     }
 }
+
 
 
 @Preview(showBackground = true, showSystemUi = true)
@@ -168,7 +183,10 @@ fun ProfessorDashboardPreview() {
             professorName = "Rachel",
             profCount = 120,
             studentCount = 350,
-            reviewCount = 210
+            reviewCount = 210,
+            onViewRatingsClick = {},
+            onViewReviewsClick = {}
         )
     }
 }
+
