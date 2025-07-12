@@ -137,12 +137,17 @@ fun MyNavHost(navController: NavHostController) {
         }
 
         composable (Screen.AdminDashboard.route){
-            AdminHomeScreen()
+            AdminHomeScreen(navController)
         }
 
         composable(Screen.CreateProfessor.route) {
             CreateProfessorScreen()
         }
+
+        composable(Screen.CreateStudent.route) {
+            CreateStudentScreen()
+        }
+
 
     }
 }

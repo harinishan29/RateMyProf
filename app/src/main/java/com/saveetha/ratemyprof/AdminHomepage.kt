@@ -14,10 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 
 class AdminHomepage : ComponentActivity() {
@@ -26,7 +29,7 @@ class AdminHomepage : ComponentActivity() {
         setContent {
             RateMyProfTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    AdminHomeScreen()
+                    AdminHomeScreen(rememberNavController())
                 }
             }
         }
@@ -34,7 +37,7 @@ class AdminHomepage : ComponentActivity() {
 }
 
 @Composable
-fun AdminHomeScreen() {
+fun AdminHomeScreen(navController: NavHostController) {
     val professorCount = 87
     val studentCount = 50
     val reviewCount = 32
@@ -54,7 +57,7 @@ fun AdminHomeScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // ✅ Left aligned greeting
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -85,16 +88,26 @@ fun AdminHomeScreen() {
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth()
         ) {
-            IconButtonCard("Create new\nProfessor", Icons.Default.Person)
-            IconButtonCard("Create new\nStudent", Icons.Default.Person)
+            IconButtonCard("Create new\nProfessor", Icons.Default.Person) {
+                navController.navigate(Screen.CreateProfessor.route)
+            }
+
+            IconButtonCard("Create new\nStudent", Icons.Default.Person) {
+                navController.navigate(Screen.CreateStudent.route)
+            }
+
         }
 
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth()
         ) {
-            IconButtonCard("View\nProfessor", Icons.Default.Person)
-            IconButtonCard("View\nStudent", Icons.Default.Person)
+            IconButtonCard("View\nProfessor", Icons.Default.Person){
+
+            }
+            IconButtonCard("View\nStudent", Icons.Default.Person){
+
+            }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -136,9 +149,9 @@ fun StatCard(title: String, value: String) {
 }
 
 @Composable
-fun IconButtonCard(title: String, icon: androidx.compose.ui.graphics.vector.ImageVector) {
+fun IconButtonCard(title: String, icon: ImageVector, onClick: () -> Unit) {
     Button(
-        onClick = { /* TODO: Navigation */ },
+        onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32)),
         modifier = Modifier
             .width(160.dp)
@@ -156,10 +169,11 @@ fun IconButtonCard(title: String, icon: androidx.compose.ui.graphics.vector.Imag
     }
 }
 
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun AdminHomeScreenPreview() {
     RateMyProfTheme {
-        AdminHomeScreen()
+        AdminHomeScreen(rememberNavController())
     }
 }

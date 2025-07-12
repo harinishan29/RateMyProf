@@ -35,5 +35,7 @@ sealed class Screen(val route: String) {
     object ProfessorHome : Screen("ProfessorDashboardScreen")
     object AdminDashboard : Screen("AdminHomeScreen")
     object CreateProfessor : Screen("CreateProfessorScreen")
+    object CreateStudent : Screen("CreateStudentScreen")
+
 
 }
