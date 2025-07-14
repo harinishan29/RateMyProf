@@ -13,9 +13,11 @@ import androidx.compose.material. icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -23,6 +25,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import com.saveetha.ratemyprof.api.RetrofitClient
+import com.saveetha.ratemyprof.api.TotalCountsResponse
+import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 
 class StudentHomePage : ComponentActivity(){
@@ -189,16 +200,48 @@ fun StatCard(title: String, count: Int, modifier: Modifier = Modifier) {
 
 @Composable
 fun StudentDashboardScreenNav(onClickStartRate: () -> Unit) {
+    val context = LocalContext.current
+    val prefs = remember { StudentPrefs(context) }
+    val studentData = prefs.getStudentData()
+
+    var profCount by remember { mutableStateOf(0) }
+    var studentCount by remember { mutableStateOf(0) }
+    var reviewCount by remember { mutableStateOf(0) }
+
+    val hasFetched = remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if (!hasFetched.value) {
+            hasFetched.value = true
+            RetrofitClient.instance.getTotalCounts().enqueue(object : Callback<TotalCountsResponse> {
+                override fun onResponse(call: Call<TotalCountsResponse>, response: Response<TotalCountsResponse>) {
+                    if (response.isSuccessful && response.body()?.Status == true) {
+                        response.body()?.Counts?.let { counts ->
+                            profCount = counts.TotalProfessors.toIntOrNull() ?: 0
+                            studentCount = counts.TotalStudents.toIntOrNull() ?: 0
+                            reviewCount = counts.TotalRatings.toIntOrNull() ?: 0
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<TotalCountsResponse>, t: Throwable) {
+                    // You can show Toast if needed
+                }
+            })
+        }
+    }
+
     RateMyProfTheme {
         StudentDashboardScreen(
-            studentName = "Rachel",
-            professorsCount = 120,
-            studentsCount = 350,
-            reviewsCount = 210,
+            studentName = "${studentData["FirstName"]}",
+            professorsCount = profCount,
+            studentsCount = studentCount,
+            reviewsCount = reviewCount,
             onClickStartRate = onClickStartRate
         )
     }
 }
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
