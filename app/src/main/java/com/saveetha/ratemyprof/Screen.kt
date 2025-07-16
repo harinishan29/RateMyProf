@@ -1,5 +1,7 @@
 package com.saveetha.ratemyprof
 
+import android.net.Uri
+
 sealed class Screen(val route: String) {
 
     object InitialPage : Screen("InitialPage")
@@ -15,17 +17,17 @@ sealed class Screen(val route: String) {
     // After Login - Home/Dashboard Screens
     object StudentHome : Screen("StudentHomeScreen")
 
-        object ProfessorList : Screen("ProfessorListScreen")
+    object ProfessorList : Screen("ProfessorListScreen")
 
-        object ProfessorRating : Screen("ProfessorRatingScreen/{name}/{title}/{rating}/{imageRes}") {
-            fun passData(name: String, title: String, rating: Float, imageRes: Int): String {
-                return "ProfessorRatingScreen/${name}/${title}/${rating}/${imageRes}"
-            }
+    object ProfessorRating : Screen("ProfessorRatingScreen/{profId}/{name}/{title}/{rating}/{imageRes}/{university}") {
+        fun passData(profId: String, name: String, title: String, rating: Float, imageRes: Int,university: String): String {
+            return "ProfessorRatingScreen/$profId/${Uri.encode(name)}/${Uri.encode(title)}/$rating/$imageRes/${Uri.encode(university)}/"
         }
+    }
 
-        object ProfessorViewRating : Screen("ProfessorViewRating")
-        object ProfessorViewReviews : Screen("ProfessorViewReviews")
 
+    object ProfessorViewRating : Screen("ProfessorViewRating")
+    object ProfessorViewReviews : Screen("ProfessorViewReviews")
 
 
     object Feedback : Screen("FeedbackUI")
@@ -36,6 +38,8 @@ sealed class Screen(val route: String) {
     object AdminDashboard : Screen("AdminHomeScreen")
     object CreateProfessor : Screen("CreateProfessorScreen")
     object CreateStudent : Screen("CreateStudentScreen")
+
+    object SelectDepartmentUniversity : Screen("SelectUniversityDepartmentScreen")
 
 
 }

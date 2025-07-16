@@ -1,53 +1,63 @@
 package com.saveetha.ratemyprof
 
+import android.net.Uri
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import android.net.Uri
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.saveetha.ratemyprof.api.ProfessorListResponse
+import com.saveetha.ratemyprof.api.ProfessorProfile
+import com.saveetha.ratemyprof.api.RetrofitClient
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
-
-data class ProfessorData(val name: String, val title: String, val rating: Float, val imageRes: Int)
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfessorListScreen(navController: NavHostController) {
+fun ProfessorListScreen(navController: NavHostController, university: String, department: String) {
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
+    var professors by remember { mutableStateOf<List<ProfessorProfile>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
-    val professors = listOf(
-        ProfessorData("Mrs. Phoebe", "Assistant Professor", 4f, R.drawable.prof1),
-        ProfessorData("Mr. Ross", "Assistant Professor", 3.5f, R.drawable.prof1),
-        ProfessorData("Mrs. Monica", "Associate Professor", 2.5f, R.drawable.prof1),
-        ProfessorData("Mr. Joey", "Assistant Professor", 2f, R.drawable.prof1)
-    )
+    // Fetch from API
+    LaunchedEffect(university, department) {
+        RetrofitClient.instance.getProfessorsByUniversityAndDept(university, department)
+            .enqueue(object : Callback<ProfessorListResponse> {
+                override fun onResponse(
+                    call: Call<ProfessorListResponse>,
+                    response: Response<ProfessorListResponse>
+                ) {
+                    if (response.isSuccessful && response.body()?.Status == true) {
+                        professors = response.body()?.ProfileData ?: emptyList()
+                    } else {
+                        errorMessage = response.body()?.Message ?: "Failed to load data."
+                    }
+                    isLoading = false
+                }
+
+                override fun onFailure(call: Call<ProfessorListResponse>, t: Throwable) {
+                    errorMessage = t.message
+                    isLoading = false
+                }
+            })
+    }
 
     val filteredProfessors = professors.filter {
-        it.name.contains(searchQuery.text, ignoreCase = true)
+        val fullName = "${it.FirstName} ${it.LastName}"
+        fullName.contains(searchQuery.text, ignoreCase = true)
     }
 
     Column(
@@ -83,27 +93,45 @@ fun ProfessorListScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        filteredProfessors.forEach {
-            ProfessorReviewCard(
-                name = it.name,
-                title = it.title,
-                rating = it.rating,
-                imageRes = it.imageRes,
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .clickable {
-                        navController.navigate(
-                            Screen.ProfessorRating.passData(
-                                Uri.encode(it.name),
-                                Uri.encode(it.title),
-                                it.rating,
-                                it.imageRes
-                            )
-                        )
-                    }
-            )
+        when {
+            isLoading -> {
+                Text("Loading...", modifier = Modifier.padding(16.dp))
+            }
+            errorMessage != null -> {
+                Text("Error: $errorMessage", modifier = Modifier.padding(16.dp))
+            }
+            filteredProfessors.isEmpty() -> {
+                Text("No professors found.", modifier = Modifier.padding(16.dp))
+            }
+            else -> {
+                filteredProfessors.forEach { prof ->
+                    val fullName = "${prof.FirstName} ${prof.LastName}"
 
-            Spacer(modifier = Modifier.height(8.dp))
+                    ProfessorReviewCard(
+                        name = fullName,
+                        title = prof.Title,
+                        rating = 4.0f, // Placeholder
+                        imageRes = R.drawable.prof1, // Replace with Coil if needed
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .clickable {
+                                navController.navigate(
+                                    Screen.ProfessorRating.passData(
+                                        prof.ProfID, // new field
+                                        fullName,
+                                        prof.Title,
+                                        4.0f, // Placeholder rating
+                                        R.drawable.prof1,
+                                        university
+                                    )
+                                )
+
+                            }
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -114,6 +142,10 @@ fun ProfessorListScreen(navController: NavHostController) {
 @Composable
 fun ProfessorListScreenPreview() {
     RateMyProfTheme {
-        ProfessorListScreen(navController = rememberNavController())
+        ProfessorListScreen(
+            navController = rememberNavController(),
+            university = "SCLAS",
+            department = "MCA"
+        )
     }
 }

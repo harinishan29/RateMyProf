@@ -1,6 +1,7 @@
 package com.saveetha.ratemyprof
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,15 +23,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.saveetha.ratemyprof.api.RatingResponse
+import com.saveetha.ratemyprof.api.RetrofitClient
+import com.saveetha.ratemyprof.models.ProfessorData
 import com.saveetha.ratemyprof.ui.theme.RateMyProfTheme
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfessorRatingScreen2(professor: ProfessorData) {
+fun ProfessorRatingScreen2(professor: ProfessorData, profId: String) {
 
     val context = LocalContext.current
     val scrollState = rememberScrollState()
+    val prefs = remember { StudentPrefs(context) }
+    val studentData = prefs.getStudentData()
     val ratingCategories = listOf(
         "Teaching Style",
         "Encouraging",
@@ -93,7 +99,7 @@ fun ProfessorRatingScreen2(professor: ProfessorData) {
                     .size(100.dp)
             )
             Spacer(modifier = Modifier.height(10.dp))
-            Text("Mrs. Phoebe", fontWeight = FontWeight.Bold, fontSize = 25.sp)
+            Text(professor.name, fontWeight = FontWeight.Bold, fontSize = 25.sp)
 
             Spacer(modifier = Modifier.height(35.dp))
 
@@ -148,9 +154,37 @@ fun ProfessorRatingScreen2(professor: ProfessorData) {
             // Submit button
             Button(
                 onClick = {
-                    val intent = Intent(context, FeedbackActivity::class.java)
-                    context.startActivity(intent)
+                    val api = RetrofitClient.instance
+
+                    api.submitProfessorRating(
+                        profID = profId, // TODO: Replace with actual prof ID (pass it from previous screen)
+                        teachingStyle = ratings[0],
+                        encouraging = ratings[1],
+                        useOfTechnology = ratings[2],
+                        respectForStudents = ratings[3],
+                        teachingStyleOption = selectedOptions[0],
+                        encouragingOption = selectedOptions[1],
+                        useOfTechnologyOption = selectedOptions[2],
+                        respectForStudentsOption = selectedOptions[3],
+                        regNo = studentData["RegNo"].toString(),
+                        university = professor.university, // TODO: Replace with actual value
+                        feedback = "Great professor!" // Add input field if needed
+                    ).enqueue(object : retrofit2.Callback<RatingResponse> {
+                        override fun onResponse(call: retrofit2.Call<RatingResponse>, response: retrofit2.Response<RatingResponse>) {
+                            if (response.isSuccessful && response.body()?.Status == true) {
+                                val intent = Intent(context, FeedbackActivity::class.java)
+                                context.startActivity(intent)
+                            } else {
+                                Toast.makeText(context, response.body()?.Message ?: "Something went wrong", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onFailure(call: retrofit2.Call<RatingResponse>, t: Throwable) {
+                            Toast.makeText(context, "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    })
                 },
+
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp),
@@ -198,11 +232,14 @@ fun StarRatingBar(
 @Composable
 fun ProfessorRatingScreenPreview() {
 
-    val professor = ProfessorData("Rachel", "Associative professor", 3f, R.drawable.prof1 )
+    val professor = ProfessorData("Rachel", "Associative professor", 3f, R.drawable.prof1 ,"")
 
     RateMyProfTheme {
         Surface {
-            ProfessorRatingScreen2(professor)
+            ProfessorRatingScreen2(
+                professor = professor,
+                profId = "12345" // dummy ProfID for preview
+            )
         }
     }
 }
