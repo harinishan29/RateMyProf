@@ -152,47 +152,29 @@ fun ProfessorRatingScreen2(professor: ProfessorData, profId: String) {
             }
 
             // Submit button
-            Button(
-                onClick = {
-                    val api = RetrofitClient.instance
+            val context = LocalContext.current
 
-                    api.submitProfessorRating(
-                        profID = profId, // TODO: Replace with actual prof ID (pass it from previous screen)
-                        teachingStyle = ratings[0],
-                        encouraging = ratings[1],
-                        useOfTechnology = ratings[2],
-                        respectForStudents = ratings[3],
-                        teachingStyleOption = selectedOptions[0],
-                        encouragingOption = selectedOptions[1],
-                        useOfTechnologyOption = selectedOptions[2],
-                        respectForStudentsOption = selectedOptions[3],
-                        regNo = studentData["RegNo"].toString(),
-                        university = professor.university, // TODO: Replace with actual value
-                        feedback = "Great professor!" // Add input field if needed
-                    ).enqueue(object : retrofit2.Callback<RatingResponse> {
-                        override fun onResponse(call: retrofit2.Call<RatingResponse>, response: retrofit2.Response<RatingResponse>) {
-                            if (response.isSuccessful && response.body()?.Status == true) {
-                                val intent = Intent(context, FeedbackActivity::class.java)
-                                context.startActivity(intent)
-                            } else {
-                                Toast.makeText(context, response.body()?.Message ?: "Something went wrong", Toast.LENGTH_SHORT).show()
-                            }
-                        }
+            Button(onClick = {
+                val intent = Intent(context, FeedbackActivity::class.java).apply {
+                    putExtra("profId", profId)
+                    putExtra("teachingStyle", ratings[0])
+                    putExtra("encouraging", ratings[1])
+                    putExtra("useOfTechnology", ratings[2])
+                    putExtra("respectForStudents", ratings[3])
 
-                        override fun onFailure(call: retrofit2.Call<RatingResponse>, t: Throwable) {
-                            Toast.makeText(context, "Failed: ${t.message}", Toast.LENGTH_SHORT).show()
-                        }
-                    })
-                },
+                    putExtra("teachingStyleOption", selectedOptions[0])
+                    putExtra("encouragingOption", selectedOptions[1])
+                    putExtra("useOfTechnologyOption", selectedOptions[2])
+                    putExtra("respectForStudentsOption", selectedOptions[3])
 
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text("Submit", color = Color.White, fontSize = 20.sp)
+                    putExtra("regNo", "456") // TODO: Replace dynamically
+                    putExtra("university", "SCLAS") // TODO: Replace dynamically
+                }
+                context.startActivity(intent)
+            }) {
+                Text("Next")
             }
+
 
         }
     }

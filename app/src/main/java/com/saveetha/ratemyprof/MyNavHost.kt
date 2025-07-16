@@ -99,7 +99,20 @@ fun MyNavHost(navController: NavHostController) {
 
 
         composable(Screen.Feedback.route) {
-            FeedbackUI(navController)
+            FeedbackUI(
+                navController,
+                profId = TODO(),
+                teachingStyle = TODO(),
+                encouraging = TODO(),
+                useOfTechnology = TODO(),
+                respectForStudents = TODO(),
+                teachingStyleOption = TODO(),
+                encouragingOption = TODO(),
+                useOfTechnologyOption = TODO(),
+                respectForStudentsOption = TODO(),
+                regNo = TODO(),
+                university = TODO()
+            )
         }
 
         composable(Screen.FeedbackPosted.route) {
